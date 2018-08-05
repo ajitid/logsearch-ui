@@ -1,6 +1,6 @@
 import json
 from channels.generic.websocket import AsyncWebsocketConsumer
-from utils import redis
+from utils import redis, redis_uid_result_expiry_time_in_seconds as r_uid_ex
 from utils.helpers import serialize, deserialize
 
 
@@ -39,11 +39,16 @@ class LogServerConsumer(AsyncWebsocketConsumer):
             redis.set('log_servers', serialize(log_servers))
         elif data['type'] == 'log_result':
             # print('at log server consumer log_result')
+            cached_results = deserialize(redis.get(f"results-{data['uid']}"))
+            cached_results[data['ip']] = data['result']
+            redis.set(f"results-{data['uid']}",
+                      serialize(cached_results), ex=r_uid_ex)
             await self.channel_layer.group_send('log_clients', data)
 
     async def log_query(self, event):
         # TODO covert everything to json
         # here send_json
+        redis.set(f"results-{event['uid']}", serialize({}))
         await self.send(json.dumps(event))
 
 

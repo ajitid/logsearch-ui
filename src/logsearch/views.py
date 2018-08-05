@@ -24,6 +24,10 @@ def results(request, uid):
     return render(request, 'logsearch/results.html')
 
 
+def results_cached(request, uid):
+    return JsonResponse(deserialize(redis.get(f"results-{uid}")))
+
+
 def log_servers(request):
     context = {
         'log_servers': deserialize(redis.get('log_servers'))

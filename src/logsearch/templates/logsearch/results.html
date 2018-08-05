@@ -2,14 +2,24 @@
 
 {% block content %}
 <p>here are results</p>
+<p>start of cached results</p>
+<ul>
 
+</ul>
+<p>end of cached ones</p>
 <script>
 {% comment %} TODO log server count {% endcomment %}
-
   function getUid() {
     var arr = window.location.pathname.split('/');
     return arr[arr.length -1];
   }
+
+  function getCachedResults() {
+      fetch('http://' + window.location.host + '/logsearch/results/cached/' + getUid())
+        .then(res => res.json())
+        .then(data => console.log(data));
+  }
+  getCachedResults();
 
   var resultsSocket = new WebSocket(
         'ws://' + window.location.host +
