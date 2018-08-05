@@ -1,6 +1,6 @@
 import json
 from channels.generic.websocket import AsyncWebsocketConsumer
-from utils import redis, redis_uid_result_expiry_time_in_seconds as r_uid_ex
+from utils import redis, redis_uid_results_expiry_time_in_seconds as r_uid_ex
 from utils.helpers import serialize, deserialize
 
 
