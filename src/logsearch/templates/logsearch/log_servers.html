@@ -1,0 +1,11 @@
+{% extends './base.html' %}
+
+{% block content %}
+<h2>List of servers connected: </h2>
+<p><i>Data is loaded in a static manner. Reload the page to look for any updates.</i></p>
+<ul>
+{% for log_server in log_servers %}
+    <li>{{ log_server }}</li>
+{% endfor %}
+</ul>
+{% endblock content %}

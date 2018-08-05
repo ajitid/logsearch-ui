@@ -1,0 +1,29 @@
+{% extends './base.html' %}
+
+{% block content %}
+{% comment %}
+  TODO
+  - save query results _ with time stamp when last ws responded back
+  - list all machines online (connected and available to ui)
+  - log search in selected machines only
+  - disconnect from specific log_server
+  - 404
+  - asgiref.sync.sync_to_async for redis
+{% endcomment %}
+<div class="columns">
+  <div class="column"></div>
+  <form class="column is-one-third">
+    <input type="text" name="log_query" id="log_query" class="field input text-center" autocomplete="off" placeholder="Enter query to search in logs...">
+    <div class="columns">
+      <div class="column"></div>
+      <div class="column">
+        <button type="submit" class="button is-bold is-primary">Make Search</button>
+      </div>
+      <div class="column"></div>
+    </div>
+  </form>
+  <div class="column"></div>
+
+
+</div>
+{% endblock content %}

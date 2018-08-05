@@ -1,0 +1,28 @@
+{% extends './base.html' %}
+
+{% block content %}
+<p>here are results</p>
+
+<script>
+{% comment %} TODO log server count {% endcomment %}
+
+  function getUid() {
+    var arr = window.location.pathname.split('/');
+    return arr[arr.length -1];
+  }
+
+  var resultsSocket = new WebSocket(
+        'ws://' + window.location.host +
+        '/ws/logsearch/results/' + getUid() + '/');
+
+    resultsSocket.onmessage = function(msgData) {
+        //console.log(msgData)
+        var data = JSON.parse(msgData.data);
+        console.log(data)
+    };
+
+    resultsSocket.onclose = function(e) {
+        console.error('Results socket closed unexpectedly');
+    };
+</script>
+{% endblock content %}
