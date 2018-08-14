@@ -2,13 +2,12 @@
 
 {% block content %}
 <p>here are results</p>
-<p>start of cached results</p>
-<ul>
+<ul id="results">
 
 </ul>
-<p>end of cached ones</p>
 <script>
 {% comment %} TODO log server count {% endcomment %}
+  var resultsDOM = document.querySelector("#results");
   function getUid() {
     var arr = window.location.pathname.split('/');
     return arr[arr.length -1];
@@ -17,7 +16,17 @@
   function getCachedResults() {
       fetch('http://' + window.location.host + '/logsearch/results/cached/' + getUid())
         .then(res => res.json())
-        .then(data => console.log(data));
+        .then(data => {
+            var addedInnerHtml = "";
+            for(entry of Object.entries(data)) {
+                addedInnerHtml += `
+                <li>
+                    <h4>${entry[0]}</h4>
+                    <pre>${entry[1]}</pre>
+                </li>`
+            }
+            resultsDOM.innerHTML += addedInnerHtml;
+        });
   }
   getCachedResults();
 
