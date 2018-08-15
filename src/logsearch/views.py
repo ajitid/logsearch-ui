@@ -25,7 +25,10 @@ def results(request, uid):
 
 
 def results_cached(request, uid):
-    return JsonResponse(deserialize(redis.get(f"results-{uid}")))
+    results = redis.get(f"results-{uid}")
+    if results is None:
+        return JsonResponse({})
+    return JsonResponse(deserialize(results))
 
 
 def log_servers(request):
