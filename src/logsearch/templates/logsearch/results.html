@@ -37,11 +37,11 @@
     resultsSocket.onmessage = function(msgData) {
         //console.log(msgData)
         var data = JSON.parse(msgData.data);
-        //console.log(data)
+        console.log(data)
         addedInnerHtml = `
             <li>
-                <h4>${data.ip}</h4>
-                <pre>${data.result}</pre>
+                <h4>${data['ip']}</h4>
+                <pre>${data['result']}</pre>
             </li>`
         resultsDOM.innerHTML += addedInnerHtml;
     };
